@@ -28,3 +28,5 @@ uvicorn api:app --reload
 /analyze → Analyze text resume
 
 /analyze-pdf → Upload and analyze PDF
+
+

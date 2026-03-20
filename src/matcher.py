@@ -31,7 +31,12 @@ def analyze_resume(resume_text, job_skills):
 
     missing = list(set(job_skills) - set(resume_skills))
 
-    return score, resume_skills, missing
+    if missing:
+        recommendation = f"Improve your resume by learning: {', '.join(missing)}"
+    else:
+        recommendation = "Your resume is well matched for this role"
+
+    return score, resume_skills, missing, recommendation
 
 
 def rank_resumes(resume_df, job_text):

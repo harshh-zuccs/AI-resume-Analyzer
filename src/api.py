@@ -67,12 +67,13 @@ async def analyze_pdf(file: UploadFile = File(...), job_role: str = "Data Scient
 
     job_skills = extract_skills(job_text)
 
-    score, skills, missing = analyze_resume(pdf_text, job_skills)
+    score, skills, missing, recommendation = analyze_resume(pdf_text, job_skills)
 
     return {
         "score": score,
         "skills": skills,
-        "missing": missing
+        "missing": missing,
+        "recommendation": recommendation
     }
 
 
