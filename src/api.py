@@ -48,7 +48,15 @@ job_descriptions = {
 #         "skills": skills,
 #         "missing": missing
 #     }
+from fastapi.middleware.cors import CORSMiddleware
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/analyze-pdf")
 async def analyze_pdf(file: UploadFile = File(...), job_role: str = "Data Scientist"):

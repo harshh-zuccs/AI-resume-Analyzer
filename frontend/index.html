@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Analyzer</title>
+</head>
+<body>
+
+    <h1>AI Resume Analyzer</h1>
+
+    <form id="uploadForm">
+        
+        <label>Select Job Role:</label>
+        <select id="jobRole">
+            <option>Data Scientist</option>
+            <option>Web Developer</option>
+            <option>HR Manager</option>
+            <option>Marketing Manager</option>
+        </select>
+
+        <br><br>
+
+        <label>Upload Resume (PDF):</label>
+        <input type="file" id="resumeFile" accept=".pdf">
+
+        <br><br>
+
+        <button type="submit">Analyze</button>
+    </form>
+
+    <h2>Result:</h2>
+    <pre id="result"></pre>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
