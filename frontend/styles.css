@@ -220,20 +220,31 @@ body {
     margin-bottom: 10px;
 }
 
+/* BUG FIX: "(Optional)" label suffix — smaller, dimmer, no uppercase forcing */
+.label-optional {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--text-3);
+    margin-left: 2px;
+}
+
 .label-icon {
     color: var(--gold);
     font-size: 14px;
 }
 
-/* Select */
+/* ── Select ──────────────────────────────────────────── */
 
 .select-wrapper {
     position: relative;
 }
 
-.field-select {
+/* Shared base for both select and textarea */
+.field-select,
+.field-textarea {
     width: 100%;
-    appearance: none;
     background: var(--surface-2);
     color: var(--text-1);
     font-family: var(--font-body);
@@ -241,29 +252,51 @@ body {
     font-weight: 400;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    padding: 13px 44px 13px 16px;
-    cursor: pointer;
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
-.field-select:focus {
+.field-select:focus,
+.field-textarea:focus {
     border-color: var(--gold);
     box-shadow: 0 0 0 3px var(--gold-dim);
+}
+
+/* Select-specific: hide native arrow, add right padding for custom arrow */
+.field-select {
+    appearance: none;
+    padding: 13px 44px 13px 16px;
+    cursor: pointer;
 }
 .field-select option {
     background: var(--surface-2);
 }
 
+/* BUG FIX: Textarea gets its own padding (no 44px right side for arrow),
+   vertical resize only so it can't break horizontal layout */
+.field-textarea {
+    padding: 13px 16px;
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+}
+.field-textarea::placeholder {
+    color: var(--text-3);
+    font-size: 14px;
+}
+
 .select-arrow {
     position: absolute;
-    right: 16px; top: 50%;
+    right: 16px;
+    /* BUG FIX: top:50% now correctly centres against just the <select>,
+       because the textarea is no longer a sibling inside .select-wrapper */
+    top: 50%;
     transform: translateY(-50%);
     color: var(--gold);
     font-size: 14px;
     pointer-events: none;
 }
 
-/* File Drop */
+/* ── File Drop ──────────────────────────────────────── */
 
 .file-drop-zone {
     position: relative;
@@ -538,6 +571,8 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    /* BUG FIX: min-height prevents layout collapse when tags list is empty */
+    min-height: 28px;
 }
 
 .skill-tag {

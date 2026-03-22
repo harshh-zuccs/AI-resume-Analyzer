@@ -26,19 +26,30 @@
         <section class="card form-card">
             <form id="uploadForm" novalidate>
 
+                <!-- BUG FIX: select-wrapper now wraps ONLY the <select> + arrow.
+                     Previously the customJD field-group was nested inside it,
+                     causing the arrow to misalign and textarea to inherit wrong padding. -->
                 <div class="field-group">
                     <label class="field-label" for="jobRole">
                         <span class="label-icon">⌖</span> Target Role
                     </label>
                     <div class="select-wrapper">
                         <select id="jobRole" class="field-select">
-                            <option>Data Scientist</option>
-                            <option>Web Developer</option>
-                            <option>HR Manager</option>
-                            <option>Marketing Manager</option>
+                            <!-- Populated by scripts.js. Fallback shown if API is offline. -->
+                            <option value="" disabled selected>Loading roles…</option>
                         </select>
                         <span class="select-arrow">↓</span>
                     </div>
+                </div>
+
+                <!-- Custom JD is now its own sibling field-group, not inside select-wrapper -->
+                <div class="field-group">
+                    <label class="field-label" for="customJD">
+                        <span class="label-icon">✎</span> Custom Job Description
+                        <span class="label-optional">(Optional)</span>
+                    </label>
+                    <textarea id="customJD" class="field-textarea" rows="4"
+                        placeholder="Paste a job description here to override the selected role's default skills…"></textarea>
                 </div>
 
                 <div class="field-group">
