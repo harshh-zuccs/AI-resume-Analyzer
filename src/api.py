@@ -1,4 +1,4 @@
-from fastapi import FastAPI,UploadFile,File
+from fastapi import FastAPI,UploadFile,File,Form
 from matcher import analyze_resume
 from skill_extraction import extract_skills
 import PyPDF2
@@ -28,26 +28,6 @@ job_descriptions = {
     """
 }
 
-# @app.post("/analyze")
-# def analyze(data: dict):
-
-#     resume_text = data["resume_text"]
-#     job_role = data["job_role"]
-
-#     if job_role not in job_descriptions:
-#         return {"error": "Invalid job role"}
-    
-#     job_text = job_descriptions[job_role]
-
-#     job_skills = extract_skills(job_text)
-
-#     score, skills, missing = analyze_resume(resume_text, job_skills)
-
-#     return {
-#         "score": score,
-#         "skills": skills,
-#         "missing": missing
-#     }
 from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
@@ -59,10 +39,15 @@ app.add_middleware(
 )
 
 @app.post("/analyze-pdf")
-async def analyze_pdf(file: UploadFile = File(...), job_role: str = "Data Scientist"):
+async def analyze_pdf(file: UploadFile = File(...), job_role: str = Form(...)):
+
+    print("Received request") 
 
     # Read file
     pdf_text = extract_text_from_pdf(file.file)
+
+    print("Job role:", job_role) 
+    print("Job role:", job_role) 
 
     # Validate job role
     if job_role not in job_descriptions:

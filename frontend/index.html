@@ -1,36 +1,127 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Resume Analyzer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <h1>AI Resume Analyzer</h1>
+    <div class="bg-grid"></div>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
 
-    <form id="uploadForm">
-        
-        <label>Select Job Role:</label>
-        <select id="jobRole">
-            <option>Data Scientist</option>
-            <option>Web Developer</option>
-            <option>HR Manager</option>
-            <option>Marketing Manager</option>
-        </select>
+    <main class="container">
 
-        <br><br>
+        <header class="header">
+            <div class="header-badge">AI Powered</div>
+            <h1 class="title">Resume<br><span class="title-accent">Analyzer</span></h1>
+            <p class="subtitle">Upload your resume and get instant feedback on how well you match your target role.</p>
+        </header>
 
-        <label>Upload Resume (PDF):</label>
-        <input type="file" id="resumeFile" accept=".pdf">
+        <section class="card form-card">
+            <form id="uploadForm" novalidate>
 
-        <br><br>
+                <div class="field-group">
+                    <label class="field-label" for="jobRole">
+                        <span class="label-icon">⌖</span> Target Role
+                    </label>
+                    <div class="select-wrapper">
+                        <select id="jobRole" class="field-select">
+                            <option>Data Scientist</option>
+                            <option>Web Developer</option>
+                            <option>HR Manager</option>
+                            <option>Marketing Manager</option>
+                        </select>
+                        <span class="select-arrow">↓</span>
+                    </div>
+                </div>
 
-        <button type="submit">Analyze</button>
-    </form>
+                <div class="field-group">
+                    <label class="field-label" for="resumeFile">
+                        <span class="label-icon">⊕</span> Resume PDF
+                    </label>
+                    <div class="file-drop-zone" id="dropZone">
+                        <input type="file" id="resumeFile" accept=".pdf" class="file-input">
+                        <div class="drop-content" id="dropContent">
+                            <div class="drop-icon">⤒</div>
+                            <p class="drop-text">Drop your PDF here or <span class="drop-link">browse</span></p>
+                            <p class="drop-hint">Supports PDF files only</p>
+                        </div>
+                        <div class="file-selected" id="fileSelected" style="display:none;">
+                            <span class="file-icon">📄</span>
+                            <span class="file-name" id="fileName"></span>
+                            <button type="button" class="file-remove" id="fileRemove">✕</button>
+                        </div>
+                    </div>
+                </div>
 
-    <h2>Result:</h2>
-    <pre id="result"></pre>
+                <button type="submit" class="btn-analyze" id="analyzeBtn">
+                    <span class="btn-text">Analyze Resume</span>
+                    <span class="btn-icon">→</span>
+                    <div class="btn-loader" id="btnLoader" style="display:none;">
+                        <span></span><span></span><span></span>
+                    </div>
+                </button>
 
-    <script src="script.js"></script>
+            </form>
+        </section>
 
+        <section class="results-section" id="resultsSection" style="display:none;">
+
+            <div class="card score-card" id="scoreCard">
+                <div class="score-label">Match Score</div>
+                <div class="score-ring">
+                    <svg viewBox="0 0 120 120" class="ring-svg">
+                        <circle cx="60" cy="60" r="50" class="ring-bg"/>
+                        <circle cx="60" cy="60" r="50" class="ring-progress" id="ringProgress"/>
+                    </svg>
+                    <div class="score-value" id="scoreValue">0%</div>
+                </div>
+                <div class="score-grade" id="scoreGrade"></div>
+            </div>
+
+            <div class="card skills-card" id="skillsCard">
+                <div class="skills-block">
+                    <h3 class="skills-title found">
+                        <span class="skills-dot found-dot"></span> Skills Found
+                        <span class="skills-count" id="foundCount">0</span>
+                    </h3>
+                    <div class="skills-tags" id="skillsFound"></div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="skills-block">
+                    <h3 class="skills-title missing">
+                        <span class="skills-dot missing-dot"></span> Missing Skills
+                        <span class="skills-count" id="missingCount">0</span>
+                    </h3>
+                    <div class="skills-tags" id="skillsMissing"></div>
+                </div>
+            </div>
+
+            <div class="card reco-card" id="recoCard">
+                <h3 class="reco-title">
+                    <span class="reco-icon">✦</span> Recommendation
+                </h3>
+                <p class="reco-text" id="recoText"></p>
+            </div>
+
+        </section>
+
+        <div class="error-bar" id="errorBar" style="display:none;">
+            <span class="error-icon">⚠</span>
+            <span class="error-msg" id="errorMsg">Error connecting to API. Make sure your server is running.</span>
+            <button class="error-close" id="errorClose">✕</button>
+        </div>
+
+    </main>
+
+    <script src="scripts.js"></script>
 </body>
 </html>
